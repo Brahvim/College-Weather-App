@@ -1,72 +1,72 @@
 /* Card Styling */
 .card {
-  border-radius: 35px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+	border-radius: 35px;
+	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+	transform: translateY(-10px);
+	box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
 }
 
 /* Weather Icon Animation */
 .weather-icon {
-  animation: float 3s ease-in-out infinite;
+	animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
 
-  0%,
-  100% {
-    transform: translateY(0);
-  }
+	0%,
+	100% {
+		transform: translateY(0);
+	}
 
-  50% {
-    transform: translateY(-10px);
-  }
+	50% {
+		transform: translateY(-10px);
+	}
 }
 
 /* Carousel Animation */
 .carousel-item {
-  transition: opacity 0.6s ease;
+	transition: opacity 0.6s ease;
 }
 
 .carousel-item.active {
-  opacity: 1;
+	opacity: 1;
 }
 
 .carousel-item:not(.active) {
-  opacity: 0;
+	opacity: 0;
 }
 
 /* Background Styling */
 .vh-100 {
-  background: linear-gradient(135deg, #89CFF0, #4682B4);
-  color: #fff;
-  font-family: 'Arial', sans-serif;
+	background: linear-gradient(135deg, #89CFF0, #4682B4);
+	color: #fff;
+	font-family: 'Arial', sans-serif;
 }
 
 /* Temperature Display */
 .display-4 {
-  font-size: 2.5rem;
-  color: #333;
+	font-size: 2.5rem;
+	color: #333;
 }
 
 .display-1 {
-  font-size: 4rem;
-  color: #111;
+	font-size: 4rem;
+	color: #111;
 }
 
 .small {
-  color: #555;
+	color: #555;
 }
 
 /* Weather Carousel */
 .carousel-indicators button {
-  background-color: #6c757d;
+	background-color: #6c757d;
 }
 
 .carousel-indicators .active {
-  background-color: #343a40;
+	background-color: #343a40;
 }
