@@ -1,4 +1,7 @@
 # Files:
-OpenWeatherMap.env
+
+# Files types:
+*.env
 
 # Directories:
+node_modules/
