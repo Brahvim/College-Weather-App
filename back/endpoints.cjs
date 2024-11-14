@@ -1,7 +1,14 @@
+const fs = require("fs");
+const path = require("path");
+
+const log = require("./log.cjs");
+
 //#region Module-static variables.
 const s_emptyMethodImplementation = (p_response, p_request) => { };
 
+const s_methodsDelete = [s_emptyMethodImplementation];
 const s_methodsPost = [s_emptyMethodImplementation];
+const s_methodsPut = [s_emptyMethodImplementation];
 const s_methodsGet = [s_emptyMethodImplementation];
 
 const s_endpointDeleteIds = [0];
@@ -13,20 +20,46 @@ const s_endpointNames = new Map();
 s_endpointNames.set("", 0);
 //#endregion
 
-//#region Getters.
-module.exports.endpointGetMethodPost = (p_id) => s_methodsPost[s_endpointPostIds[p_id]];
-module.exports.endpointGetMethodGet = (p_id) => s_methodsGet[s_endpointGetIds[p_id]];
-module.exports.endpointGetId = (p_name) => s_endpointNames.get(p_name) ?? 0;
+module.exports.createHtmlEndpoints = (p_dir) => {
 
-module.exports.endpointDestroy = (p_name) => {
-	const id = module.exports.endpointGetId(p_name);
+	const files = fs.readdirSync("./front");
+	// const filesHtml = files.filter((p_file) => p_file.endsWith(".html"));
+
+	const filesNoExt = files.map((p_file) => {
+
+		let idDot = p_file.lastIndexOf(".");
+
+		if (idDot === -1) {
+			idDot = p_file.length();
+		}
+
+		const strNameNoExt = p_file.substring(0, idDot);
+		return strNameNoExt;
+
+	});
+
+	for (const f of files) {
+		log.i(f);
+	}
+
+};
+
+// Getters.
+module.exports.getMethodDelete = (p_id) => s_methodsDelete[s_endpointDeleteIds[p_id]];
+module.exports.getMethodPost = (p_id) => s_methodsPost[s_endpointPostIds[p_id]];
+module.exports.getMethodPut = (p_id) => s_methodsPut[s_endpointPutIds[p_id]];
+module.exports.getMethodGet = (p_id) => s_methodsGet[s_endpointGetIds[p_id]];
+module.exports.getId = (p_name) => s_endpointNames.get(p_name) ?? 0;
+
+module.exports.destroy = (p_name) => {
+	const id = module.exports.getId(p_name);
 
 	s_endpointNames.set(p_name, 0);
 	s_endpointPostIds[id] = 0;
 	s_endpointGetIds[id] = 0;
 }
 
-module.exports.endpointCreate = (p_name) => {
+module.exports.create = (p_name) => {
 	const id = s_endpointNames.size;
 
 	s_endpointNames.set(p_name, id);
@@ -36,7 +69,7 @@ module.exports.endpointCreate = (p_name) => {
 	return id;
 }
 
-module.exports.endpointGetName = (p_id) => {
+module.exports.getName = (p_id) => {
 	for (const [k, v] of s_endpointNames) {
 
 		if (v === p_id)
@@ -46,14 +79,9 @@ module.exports.endpointGetName = (p_id) => {
 
 	return "";
 }
-//#endregion
 
-//#region Setters.
-module.exports.endpointSetMethodPost = (p_id, p_methodImpl) => {
-	s_endpointPostIds[p_id] = s_methodsPost.push(p_methodImpl) - 1;
-}
-
-module.exports.endpointSetMethodGet = (p_id, p_methodImpl) => {
-	s_endpointGetIds[p_id] = s_methodsGet.push(p_methodImpl) - 1;
-}
-//#endregion
+// Setters.
+module.exports.setMethodDelete = (p_id, p_methodImpl) => s_endpointDeleteIds[p_id] = s_methodsDelete.push(p_methodImpl) - 1;
+module.exports.setMethodPost = (p_id, p_methodImpl) => s_endpointPostIds[p_id] = s_methodsPost.push(p_methodImpl) - 1;
+module.exports.setMethodPut = (p_id, p_methodImpl) => s_endpointPutIds[p_id] = s_methodsPut.push(p_methodImpl) - 1;
+module.exports.setMethodGet = (p_id, p_methodImpl) => s_endpointGetIds[p_id] = s_methodsGet.push(p_methodImpl) - 1;

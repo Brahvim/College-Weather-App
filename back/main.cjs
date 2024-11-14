@@ -1,56 +1,68 @@
-const fs = require("fs");
 const url = require("url");
 const http = require("http");
-const path = require("path");
+const mime = await import("mime");
 
 const log = require("./log.cjs");
-
-const {
-
-	endpointCreate,
-	endpointDestroy,
-	endpointGetId,
-	endpointGetName,
-	endpointGetMethodGet,
-	endpointGetMethodPut,
-	endpointGetMethodPost,
-	endpointGetMethodDelete,
-	endpointSetMethodGet,
-	endpointSetMethodPut,
-	endpointSetMethodPost,
-	endpointSetMethodDelete,
-
-} = require("./endpoints.cjs");
+const files = require("./files.cjs");
+const config = require("./config.cjs");
+const endpoints = require("./endpoints.cjs");
 
 const s_port = 8080;
 
-const s_server = http.createServer((p_request, p_response) => {
+const s_server = http.createServer(async (p_request, p_response) => {
 
-	const endpointNameUnresolved = p_request.url.split("?")[0];
-	let endpointName = "/index";
+	const queryUrl = p_request.url;
+	const queryMethod = p_request.method;
+	const queryUrlPath = queryUrl.split("?")[0];
 
-	if (endpointNameUnresolved !== "/") {
-		endpointName = endpointNameUnresolved;
+	let queryEndpointName = "/index.html";
+
+	if (queryUrlPath !== "/") {
+		queryEndpointName = queryUrlPath;
 	}
 
-	const endpointId = endpointGetId(endpointName);
-	const method = p_request.method;
+	const queryEndpointId = endpoints.getId(queryEndpointName);
 
-	if (method === "GET") {
+	if (queryMethod === "GET") {
 
-		endpointGetMethodGet(endpointId)(p_response, p_request);
+		if (queryEndpointName.indexOf(".") !== -1) {
 
-	} else if (method === "POST") {
+			const cache = files.fromCache(queryEndpointName);
 
-		endpointGetMethodPost(endpointId)(p_response, p_request);
+			if (!cache) {
 
-	} else if (method === "PUT") {
+				const data = files.load(queryEndpointName);
 
-		endpointGetMethodPut(endpointId)(p_response, p_request);
+				if (data) {
 
-	} else if (method === "DELETE") {
+					const httpParamContentTypeValue = mime.getType(queryEndpointName);
 
-		endpointGetMethodDelete(endpointId)(p_response, p_request);
+					p_response.writeHead(200, "OK", "Content-Type", httpParamContentTypeValue);
+					p_response.end(data);
+
+				} else {
+
+					files.fromCache(config["404"]);
+
+				}
+
+			}
+
+		};
+
+		endpoints.getMethodGet(queryEndpointId)(p_response, p_request);
+
+	} else if (queryMethod === "POST") {
+
+		endpoints.getMethodPost(queryEndpointId)(p_response, p_request);
+
+	} else if (queryMethod === "PUT") {
+
+		endpoints.getMethodPut(queryEndpointId)(p_response, p_request);
+
+	} else if (queryMethod === "DELETE") {
+
+		endpoints.getMethodDelete(queryEndpointId)(p_response, p_request);
 
 	}
 
