@@ -1,7 +1,7 @@
 {
   "description": "",
   "version": "1.0.0",
-  "main": "back/begin.cjs",
+  "main": "back/main.cjs",
   "author": "UdHax0r, Brahvim",
   "name": "college-weather-app",
   "scripts": {
