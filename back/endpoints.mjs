@@ -1,10 +1,7 @@
 import fs from "fs"
-import path from "path"
 
-import log from "./log.mjs";
-
-//#region Module-static variables.
-const s_emptyMethodImplementation = (p_response, p_request) => { };
+// #region Module-static variables.
+const s_emptyMethodImplementation = () => { };
 
 const s_methodsDelete = [s_emptyMethodImplementation];
 const s_methodsPost = [s_emptyMethodImplementation];
@@ -16,40 +13,51 @@ const s_endpointPostIds = [0];
 const s_endpointGetIds = [0];
 const s_endpointPutIds = [0];
 
-const s_endpointNames = new Map();
-s_endpointNames.set("", 0);
+const s_endpointNames = new Map([{ "": "" }]);
 //#endregion
 
 export default {
-	createHtmlEndpoints: (p_dir) => {
-		const files = fs.readdirSync("./front");
-		// const filesHtml = files.filter((p_file) => p_file.endsWith(".html"));
 
-		const filesNoExt = files.map((p_file) => {
+	createEndpointsFromMjsFiles: (...p_files) => {
+		for (const f of p_files) {
 
-			let idDot = p_file.lastIndexOf(".");
+			// Leads VSCode into type-checking, hehe!:
+			if (typeof f !== 'string')
+				continue;
 
-			if (idDot === -1) {
-				idDot = p_file.length();
-			}
+			fs.readFile(f, (p_error, p_data) => {
 
-			const strNameNoExt = p_file.substring(0, idDot);
-			return strNameNoExt;
+			});
 
-		});
-
-		for (const f of files) {
-			log.i(f);
 		}
 	},
 
-	// Getters.
+	// #region Getters.
 	getMethodDelete: (p_id) => s_methodsDelete[s_endpointDeleteIds[p_id]],
 	getMethodPost: (p_id) => s_methodsPost[s_endpointPostIds[p_id]],
 	getMethodPut: (p_id) => s_methodsPut[s_endpointPutIds[p_id]],
 	getMethodGet: (p_id) => s_methodsGet[s_endpointGetIds[p_id]],
 	getId: (p_name) => s_endpointNames.get(p_name) ?? 0,
+	getName: (p_id) => {
+		for (const [k, v] of s_endpointNames) {
 
+			if (v === p_id)
+				return k;
+
+		}
+
+		return "";
+	},
+	// #endregion
+
+	// #region Setters.
+	setMethodDelete: (p_id, p_methodImpl) => s_endpointDeleteIds[p_id] = s_methodsDelete.push(p_methodImpl) - 1,
+	setMethodPost: (p_id, p_methodImpl) => s_endpointPostIds[p_id] = s_methodsPost.push(p_methodImpl) - 1,
+	setMethodPut: (p_id, p_methodImpl) => s_endpointPutIds[p_id] = s_methodsPut.push(p_methodImpl) - 1,
+	setMethodGet: (p_id, p_methodImpl) => s_endpointGetIds[p_id] = s_methodsGet.push(p_methodImpl) - 1,
+	// #endregion
+
+	// #region Management.
 	destroy: (p_name) => {
 		const id = module.exports.getId(p_name);
 
@@ -67,21 +75,6 @@ export default {
 
 		return id;
 	},
+	// #endregion
 
-	getName: (p_id) => {
-		for (const [k, v] of s_endpointNames) {
-
-			if (v === p_id)
-				return k;
-
-		}
-
-		return "";
-	},
-
-	// Setters.
-	setMethodDelete: (p_id, p_methodImpl) => s_endpointDeleteIds[p_id] = s_methodsDelete.push(p_methodImpl) - 1,
-	setMethodPost: (p_id, p_methodImpl) => s_endpointPostIds[p_id] = s_methodsPost.push(p_methodImpl) - 1,
-	setMethodPut: (p_id, p_methodImpl) => s_endpointPutIds[p_id] = s_methodsPut.push(p_methodImpl) - 1,
-	setMethodGet: (p_id, p_methodImpl) => s_endpointGetIds[p_id] = s_methodsGet.push(p_methodImpl) - 1,
 };
