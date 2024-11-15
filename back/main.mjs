@@ -1,11 +1,12 @@
-const url = require("url");
-const http = require("http");
-const mime = await import("mime");
+import http from "node:http"
+import url from "node:url"
 
-const log = require("./log.cjs");
-const files = require("./files.cjs");
-const config = require("./config.cjs");
-const endpoints = require("./endpoints.cjs");
+import mime from "mime"
+
+import log from "./log.mjs"
+import files from "./files.mjs"
+import config from "./config.mjs"
+import endpoints from "./endpoints.mjs"
 
 const s_port = 8080;
 
@@ -31,7 +32,7 @@ const s_server = http.createServer(async (p_request, p_response) => {
 
 			if (!cache) {
 
-				const data = files.load(queryEndpointName);
+				const data = files.load(`./front/${queryEndpointName}`);
 
 				if (data) {
 
@@ -69,3 +70,4 @@ const s_server = http.createServer(async (p_request, p_response) => {
 });
 
 s_server.listen(s_port);
+console.log(`Server active on [ https://localhost:${s_port} ].`);
