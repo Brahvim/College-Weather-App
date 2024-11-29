@@ -2,5 +2,8 @@
   "type": "module",
   "main": "back/main.cjs",
   "author": "UdHax0r, Brahvim",
-  "name": "college-weather-app"
+  "name": "college-weather-app",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }

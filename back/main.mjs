@@ -1,114 +1,29 @@
-import mime from "mime"
-import fs from "node:fs"
-import http from "node:http"
-import frontfs from "./frontfs.mjs"
-import config from "./config.mjs"
-import endpoints from "./endpoints.mjs"
+import path from "node:path";
 
-let s_countRequests = 0;
-let s_countFailures = 0;
-let s_countSuccesses = 0;
+import express from "express";
 
-const s_port = config.port; // Do the de-ref here.
+import config from "../server.json";
 
-function callMethodImpl(p_requestId, p_methodImpl, p_response, p_request) {
-	try {
+const s_app = express();
+const s_port = config.port;
 
-		p_methodImpl(p_response, p_request);
+const s_pathFront = path.join(process.cwd(), "front/");
 
-	} catch (e) {
+s_app.use(express.static(s_pathFront));
 
-		++s_countFailures;
-		console.warn(`Request #${p_requestId} failed.`);
-		console.error(`Exception calling HTTP method implementation for request #${p_requestId}: `, e);
+s_app.get("/", (p_request, p_response) => {
 
-	}
-}
+	p_response.sendFile(path.join(s_pathFront, "index.html"));
 
-const s_server = http.createServer(async (p_request, p_response) => {
-	const requestId = ++s_countRequests;
-	console.info(`Received request #${requestId}`);
-
-	const queryUrl = p_request.url;
-	const queryMethod = p_request.method;
-	const queryUrlPath = queryUrl.split("?")[0];
-	const queryEndpointId = endpoints.getId(queryUrlPath);
-
-	const urlRedirection = `<meta charset="utf-8" lang="en" http-equiv='refresh' content='2; URL=html/home.html' />`;
-
-	if (queryMethod === "GET") {
-
-		if (frontfs.canLoad(queryUrlPath)) {
-
-			const cache = frontfs.fromCache(`./front/${queryUrlPath}`);
-
-			if (cache) {
-
-				const httpParamContentTypeValue = mime.getType(queryUrlPath);
-
-				p_response
-					.writeHead(200, { "Content-Type": httpParamContentTypeValue })
-					.end(cache);
-
-				++s_countSuccesses;
-				console.info(`Request #${requestId} succeeded.`);
-
-			} else {
-
-				const data = frontfs.load(`./front/${queryUrlPath}`);
-
-				if (data) {
-
-					const httpParamContentTypeValue = mime.getType(queryUrlPath);
-
-					p_response
-						.writeHead(200, { "Content-Type": httpParamContentTypeValue })
-						.end(data);
-
-					++s_countSuccesses;
-					console.info(`Request #${requestId} succeeded.`);
-
-				} else {
-
-					++s_countFailures;
-					console.warn(`Request #${requestId} failed.`);
-
-					p_response
-						.writeHead(400, { "Content-Type": "text/html" })
-						.end(config["404"]);
-
-				}
-
-			}
-
-		};
-
-		callMethodImpl(requestId, endpoints.getMethodGet(queryEndpointId), p_response, p_request);
-		return;
-
-	} else if (queryMethod === "PUT") {
-
-		callMethodImpl(requestId, endpoints.getMethodPut(queryEndpointId), p_response, p_request);
-		return;
-
-	} else if (queryMethod === "POST") {
-
-		callMethodImpl(requestId, endpoints.getMethodPost(queryEndpointId), p_response, p_request);
-		return;
-
-	} else if (queryMethod === "DELETE") {
-
-		callMethodImpl(requestId, endpoints.getMethodDelete(queryEndpointId), p_response, p_request);
-		return;
-
-	}
-
-	p_response.writeHead(400, { "Content-Type": "text/plain" });
-	p_response.end();
 });
 
-endpoints.createEndpointForFile(`./front/index.html`, "/");
-endpoints.createEndpointsFromEndpointsDir();
-s_server.listen(s_port);
+s_app.get("/weather", (p_request, p_response) => {
 
-console.log(`Server active on [ http://localhost:${s_port} ].`);
+
+});
+
+s_app.listen(s_port, () => {
+
+	console.log(`Server is running at [ http://localhost:${s_port} ].`);
+
+});
