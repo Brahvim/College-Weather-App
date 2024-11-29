@@ -1,5 +1,5 @@
 import fs from "fs"
-import files from "./files.mjs"
+import frontfs from "./frontfs.mjs"
 
 const configData = fs.readFileSync("./server.json");
 let configJson;
@@ -17,7 +17,7 @@ if (configData) {
 console.info("Caching files from `server.json`...");
 
 // #region Caching files.
-if (files.load(configJson["/"])) {
+if (frontfs.load(configJson["/"])) {
 
 	console.info("Page for `/` loaded.");
 
@@ -28,7 +28,7 @@ if (files.load(configJson["/"])) {
 
 }
 
-if (files.load(configJson["500"])) {
+if (frontfs.load(configJson["500"])) {
 
 	console.info("Page for `500` loaded.");
 
@@ -39,14 +39,14 @@ if (files.load(configJson["500"])) {
 
 }
 
-if (configJson["400"] = files.load(configJson["404"])) {
+if (frontfs.load(configJson["404"])) {
 
 	console.info("Page for `404` loaded.");
 
 } else {
 
 	console.info("Page for `404` not found!");
-	configJson["400"] = "(Application `404` page goes here. Please configure `server.json`!)";
+	configJson["404"] = "(Application `404` page goes here. Please configure `server.json`!)";
 
 }
 //#endregion

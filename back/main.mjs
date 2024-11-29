@@ -1,6 +1,7 @@
 import mime from "mime"
+import fs from "node:fs"
 import http from "node:http"
-import files from "./files.mjs"
+import frontfs from "./frontfs.mjs"
 import config from "./config.mjs"
 import endpoints from "./endpoints.mjs"
 
@@ -17,20 +18,11 @@ function callMethodImpl(p_requestId, p_methodImpl, p_response, p_request) {
 
 	} catch (e) {
 
-		declareRequestFailure(p_requestId);
-		console.error(`Error calling HTTP method implementation for request #${p_requestId}: `, e);
+		++s_countFailures;
+		console.warn(`Request #${p_requestId} failed.`);
+		console.error(`Exception calling HTTP method implementation for request #${p_requestId}: `, e);
 
 	}
-}
-
-function declareRequestFailure(p_requestId) {
-	++s_countFailures;
-	console.warn(`Request #${p_requestId} failed.`);
-}
-
-function declareRequestSuccess(p_requestId) {
-	++s_countSuccesses;
-	console.info(`Request #${p_requestId} succeeded.`);
 }
 
 const s_server = http.createServer(async (p_request, p_response) => {
@@ -40,28 +32,15 @@ const s_server = http.createServer(async (p_request, p_response) => {
 	const queryUrl = p_request.url;
 	const queryMethod = p_request.method;
 	const queryUrlPath = queryUrl.split("?")[0];
-
-	// Node probably handles this? (Firefox and `curl` both failed to get `../` in the URL here!)
-	// if (queryUrlPath.search("..") != 0) {
-	//
-	// 	++s_countTotalFailures;
-	//
-	// 	p_response
-	// 		.writeHead(500, { "Content-Type": "text/html" })
-	// 		.end(config["500"]);
-	//
-	// 	return;
-	//
-	// }
-
 	const queryEndpointId = endpoints.getId(queryUrlPath);
+
+	const urlRedirection = `<meta charset="utf-8" lang="en" http-equiv='refresh' content='2; URL=html/home.html' />`;
 
 	if (queryMethod === "GET") {
 
-		// if (queryUrlPath.indexOf(".") !== -1) {
-		if (files.canLoad(queryUrlPath)) {
+		if (frontfs.canLoad(queryUrlPath)) {
 
-			const cache = files.fromCache(queryUrlPath);
+			const cache = frontfs.fromCache(`./front/${queryUrlPath}`);
 
 			if (cache) {
 
@@ -71,11 +50,12 @@ const s_server = http.createServer(async (p_request, p_response) => {
 					.writeHead(200, { "Content-Type": httpParamContentTypeValue })
 					.end(cache);
 
-				declareRequestSuccess(requestId);
+				++s_countSuccesses;
+				console.info(`Request #${requestId} succeeded.`);
 
 			} else {
 
-				const data = files.load(`./front/${queryUrlPath}`);
+				const data = frontfs.load(`./front/${queryUrlPath}`);
 
 				if (data) {
 
@@ -85,11 +65,13 @@ const s_server = http.createServer(async (p_request, p_response) => {
 						.writeHead(200, { "Content-Type": httpParamContentTypeValue })
 						.end(data);
 
-					declareRequestSuccess(requestId);
+					++s_countSuccesses;
+					console.info(`Request #${requestId} succeeded.`);
 
 				} else {
 
-					declareRequestFailure(requestId);
+					++s_countFailures;
+					console.warn(`Request #${requestId} failed.`);
 
 					p_response
 						.writeHead(400, { "Content-Type": "text/html" })
@@ -125,5 +107,8 @@ const s_server = http.createServer(async (p_request, p_response) => {
 	p_response.end();
 });
 
+endpoints.createEndpointForFile(`./front/index.html`, "/");
+endpoints.createEndpointsFromEndpointsDir();
 s_server.listen(s_port);
+
 console.log(`Server active on [ http://localhost:${s_port} ].`);
