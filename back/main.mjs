@@ -1,7 +1,11 @@
+import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 
 import dotenv from "dotenv";
 import express from "express";
+import bodyParser from "body-parser";
+import { timeStamp } from "node:console";
 
 dotenv.config();
 
@@ -27,7 +31,8 @@ const s_dataWeatherEmpty = {
 
 };
 
-const s_pathFront = path.join(process.cwd(), "front");
+const s_pathFront = process.env["dir.front"] || "./front";
+const s_pathFeedback = process.env["dir.feedback"] || "./feedback";
 
 const s_strDataWeatherEmpty = JSON.stringify(s_dataWeatherEmpty);
 
@@ -47,12 +52,58 @@ async function fetchOpenWeatherMap(p_city) {
 }
 //#endregion
 
-//#region Express config.
 s_app.use(express.static(s_pathFront));
+s_app.use(bodyParser.urlencoded({ extended: true }));
 
+//#region Files.
 s_app.get("/", (p_request, p_response) => {
 
 	p_response.sendFile(path.join(s_pathFront, "index.html"));
+
+});
+
+// s_app.get("/team", (p_request, p_response) => {
+//
+// 	p_response.sendFile(path.join(s_pathFront, "team.html"));
+//
+// });
+//
+// s_app.get("/feedback", (p_request, p_response) => {
+//
+// 	p_response.sendFile(path.join(s_pathFront, "feedback.html"));
+//
+// });
+//#endregion
+
+//#region API.
+s_app.post("/feedback.html", (p_request, p_response) => {
+
+	const { name, email, feedback } = p_request.body;
+	const timestamp = Math.floor(Date.now() / 1_000); // Unix timestamp!
+
+	const hash = crypto
+		.createHash("sha256")
+		.update(`${name}${email}${feedback}${timestamp}`)
+		.digest("hex");
+
+	fs.writeFile(
+		`${s_pathFeedback}/${hash}.json`,
+		JSON.stringify({ name, email, feedback, timestamp }),
+		(p_error) => {
+
+			if (p_error) {
+
+				p_response
+					.status(500)
+					.send();
+
+				return;
+			}
+
+			p_response.send();
+
+		}
+	);
 
 });
 
@@ -89,6 +140,7 @@ s_app.get("/weather", (p_request, p_response) => {
 		});
 
 });
+//#endregion
 
 s_app.listen(s_port, () => {
 
