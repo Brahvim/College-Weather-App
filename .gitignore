@@ -2,6 +2,8 @@
 
 # Files types:
 *.env
+*.jpg
+*.jpeg
 
 # Directories:
 node_modules/
