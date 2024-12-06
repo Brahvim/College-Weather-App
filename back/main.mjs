@@ -5,7 +5,6 @@ import crypto from "node:crypto";
 import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
-import { timeStamp } from "node:console";
 
 dotenv.config();
 
@@ -31,8 +30,9 @@ const s_dataWeatherEmpty = {
 
 };
 
-const s_pathFront = process.env["dir.front"] || "./front";
-const s_pathFeedback = process.env["dir.feedback"] || "./feedback";
+const s_pathCwd = process.cwd();
+const s_pathFront = process.env["dir.front"] || path.join(s_pathCwd, "front");
+const s_pathFeedback = process.env["dir.feedback"] || path.join(s_pathCwd, "feedback");
 
 const s_strDataWeatherEmpty = JSON.stringify(s_dataWeatherEmpty);
 
@@ -76,7 +76,7 @@ s_app.get("/", (p_request, p_response) => {
 //#endregion
 
 //#region API.
-s_app.post("/feedback.html", (p_request, p_response) => {
+s_app.post("/feedback", (p_request, p_response) => {
 
 	const { name, email, feedback } = p_request.body;
 	const timestamp = Math.floor(Date.now() / 1_000); // Unix timestamp!
@@ -95,12 +95,14 @@ s_app.post("/feedback.html", (p_request, p_response) => {
 
 				p_response
 					.status(500)
-					.send();
+					.sendFile(path.join(s_pathFront, "feedback-error.html"));
 
 				return;
 			}
 
-			p_response.send();
+			p_response
+				.status(200)
+				.sendFile(path.join(s_pathFront, "feedback-given.html"));
 
 		}
 	);

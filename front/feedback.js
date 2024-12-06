@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	elementFormFeedback.addEventListener("submit", (p_event) => {
 
-		p_event.preventDefault(); // The form RELOADS the page!!!
+		// p_event.preventDefault(); // `<form>`s RELOAD the page!!! PREVENT IT!
 
 		const strName = document.getElementById("name").value.trim();
 		const strEmail = document.getElementById("email").value.trim();
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		elementMessageFeedback.style.color = "green";
 
 		// Clear all fields in form:
-		elementFormFeedback.reset();
+		// elementFormFeedback.reset();
 
 	});
 

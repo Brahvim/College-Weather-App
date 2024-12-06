@@ -35,28 +35,30 @@
 
 	<div class="container my-5">
 
-
 		<div class="feedback-container shadow-lg rounded">
 
 			<h2 class="text-center mb-4">We'd &lt;3 to hear from you!</h2>
 			<p class="text-center text-muted">
 				We may message you regarding it <i>personally!</i>
 				<br />
-				When you tell us things, we grow! Share your thoughts below!:
+				Our server will e-mail you to notify you if we receive it.
+				<br />
+				<b>When you feed us, we grow!</b> Share your thoughts below!:
 			</p>
 
-			<!-- TODO: Get this man an endpoint! -->
-			<form method="POST">
+			<form
+				method="POST"
+				action="/feedback"
+			>
 
 				<div class="form-floating mb-3">
 
 					<input
-						type="text"
-						class="form-control"
 						id="name"
+						type="text"
 						name="name"
+						class="form-control"
 						placeholder="Your Name"
-						required
 					>
 
 					<label for="name">Your name :)</label>
@@ -66,12 +68,11 @@
 				<div class="form-floating mb-3">
 
 					<input
-						type="email"
-						class="form-control"
 						id="email"
+						type="email"
 						name="email"
+						class="form-control"
 						placeholder="name@example.com"
-						required
 					>
 
 					<label for="email">Mail (personal messages only!),</label>
@@ -81,12 +82,12 @@
 				<div class="form-floating mb-3">
 
 					<textarea
-						class="form-control"
+						required
 						id="feedback"
 						name="feedback"
-						placeholder="Share your feedback here"
+						class="form-control"
 						style="height: 150px"
-						required
+						placeholder="Share your feedback here"
 					></textarea>
 
 					<label for="feedback">Your soda-smooth spirit-full thoughts!</label>
