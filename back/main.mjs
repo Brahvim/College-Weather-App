@@ -62,19 +62,6 @@ s_app.get("/", (p_request, p_response) => {
 
 });
 
-// s_app.get("/team", (p_request, p_response) => {
-//
-// 	p_response.sendFile(path.join(s_pathFront, "team.html"));
-//
-// });
-//
-// s_app.get("/feedback", (p_request, p_response) => {
-//
-// 	p_response.sendFile(path.join(s_pathFront, "feedback.html"));
-//
-// });
-//#endregion
-
 //#region API.
 s_app.post("/feedback", (p_request, p_response) => {
 

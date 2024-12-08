@@ -1,72 +1,199 @@
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation Bar Styling */
+.navbar ::after :hover {
+    background-color: #007BFF;
+    padding: 20px 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+.navbar-nav .nav-link {
+    color: rgb(6, 5, 5);
+    font-size: 18px;
+    padding: 12px 20px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-right: 20px;
+}
+
+/* Hero Section Styling */
+.hero-section {
+    padding: 120px 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
 /* Card Styling */
 .card {
-	border-radius: 35px;
-	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-	transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
+    opacity: 0;
+    /* Start with hidden cards */
+    animation: fadeInUp 1s forwards;
+    /* Animation added here */
 }
 
 .card:hover {
-	transform: translateY(-10px);
-	box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px);
 }
 
-/* Weather Icon Animation */
-.weather-icon {
-	animation: float 3s ease-in-out infinite;
+.card-header {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
 }
 
-@keyframes float {
-
-	0%,
-	100% {
-		transform: translateY(0);
-	}
-
-	50% {
-		transform: translateY(-10px);
-	}
+.card-body {
+    padding: 20px;
+    text-align: center;
 }
 
-/* Carousel Animation */
-.carousel-item {
-	transition: opacity 0.6s ease;
+.card-body h1 {
+    font-size: 48px;
+    color: #333;
 }
 
-.carousel-item.active {
-	opacity: 1;
+/* Weather Result Section */
+#weather-result {
+    font-size: 18px;
+    color: #333;
 }
 
-.carousel-item:not(.active) {
-	opacity: 0;
+/* Dark Mode Styling */
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
 }
 
-/* Background Styling */
-.vh-100 {
-	background: linear-gradient(135deg, #89CFF0, #4682B4);
-	color: #fff;
-	font-family: "Arial", sans-serif;
+body.dark-mode .navbar {
+    background-color: #444;
 }
 
-/* Temperature Display */
-.display-4 {
-	font-size: 2.5rem;
-	color: #333;
+body.dark-mode .card {
+    background-color: #444;
+    color: #fff;
 }
 
-.display-1 {
-	font-size: 4rem;
-	color: #111;
+body.dark-mode .card-header {
+    background-color: #555;
 }
 
-.small {
-	color: #555;
+/* Button Styling */
+.btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
 }
 
-/* Weather Carousel */
-.carousel-indicators button {
-	background-color: #6c757d;
+/* Animation for Weather Cards */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.carousel-indicators .active {
-	background-color: #343a40;
+/* Bounce Animation for Cards */
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.card-body {
+    animation: fadeInUp 1s ease-out forwards;
+    /* Adding fade-in animation */
+}
+
+.card-body h1 {
+    animation: bounce 1s ease-in-out infinite;
+    /* Adding bounce animation for numbers */
+}
+
+/* For Responsive Layout */
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+
+    .hero-section {
+        padding: 80px 20px;
+    }
+
+    .hero-section .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+
+    .card-body h1 {
+        font-size: 36px;
+    }
+
+    .col-md-4 {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* For very small screens (phones in portrait mode) */
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 60px 20px;
+    }
+
+    .hero-section .display-4 {
+        font-size: 2rem;
+    }
+
+    .hero-section .lead {
+        font-size: 0.9rem;
+    }
+
+    .navbar-brand {
+        font-size: 22px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+
+    .card-body h1 {
+        font-size: 30px;
+    }
+
+    .card-body p {
+        font-size: 12px;
+    }
 }

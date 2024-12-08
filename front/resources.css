@@ -1,0 +1,97 @@
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation Bar Styling */
+.navbar {
+    background-color: #007BFF;
+    padding: 20px 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+.navbar-nav .nav-link {
+    color: rgb(6, 5, 5);
+    font-size: 18px;
+    padding: 12px 20px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+/* Hero Section Styling */
+.hero-section {
+    padding: 120px 20px;
+    background-color: #007BFF;
+    color: white;
+}
+
+/* Card Styling */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card-header {
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-body h1 {
+    font-size: 48px;
+    color: #333;
+}
+
+/* Button Styling */
+.btn {
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #f8f9fa;
+}
+
+/* Dark Mode Styling */
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode .navbar {
+    background-color: #444;
+}
+
+body.dark-mode .card {
+    background-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .card-header {
+    background-color: #555;
+}

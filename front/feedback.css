@@ -1,83 +1,118 @@
-/* General Styles */
+/* General Styling */
 body {
-	font-family: "Poppins", sans-serif;
-	margin: 0;
-	padding: 0;
-	background: linear-gradient(135deg, #4e54c8, #8f94fb);
-	color: #333;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
 }
 
-#img-rainbow {
-
-	z-index: -1;
-	padding-left: 25%;
-	position: absolute;
-
+/* Navbar Styling */
+.navbar {
+    background-color: #007BFF;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Feedback Form Container */
+.navbar .navbar-brand {
+    color: #007BFF;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-link {
+    color: #007BFF;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-right: 20px;
+    font-weight: 500;
+}
+
+
+.navbar .nav-link:hover {
+    color: black;
+}
+
+/* Container for Feedback Form */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 80px;
+    /* To avoid navbar overlap */
+}
+
+/* Feedback Form Styling */
 .feedback-container {
-	background: white;
-	padding: 30px;
-	border-radius: 20px;
-	max-width: 500px;
-	margin: auto;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-	animation: slideIn 1s ease-in-out;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    padding: 40px;
 }
 
 .feedback-container h2 {
-	font-weight: bold;
-	color: #4e54c8;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 20px;
 }
 
 .feedback-container p {
-	font-size: 1em;
-	margin-bottom: 20px;
-	color: #6c757d;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #6c757d;
+    margin-bottom: 30px;
 }
 
-/* Form Inputs */
-.form-floating .form-control {
-	border-radius: 10px;
-	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
+/* Form Input Styling */
+.form-floating input,
 .form-floating textarea {
-	resize: none;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    font-size: 1rem;
+    box-shadow: none;
 }
 
-.form-floating .form-control:focus {
-	border-color: #8f94fb;
-	box-shadow: 0 0 5px rgba(143, 148, 251, 0.5);
+.form-floating label {
+    font-size: 0.9rem;
+    color: #6c757d;
 }
 
-/* Submit Button */
+.form-floating input:focus,
+.form-floating textarea:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Gradient Submit Button */
 .btn-gradient {
-	background: linear-gradient(135deg, #4e54c8, #8f94fb);
-	color: white;
-	border: none;
-	border-radius: 10px;
-	transition: all 0.3s ease-in-out;
-	padding: 10px 20px;
-	font-weight: bold;
+    background: linear-gradient(90deg, #007BFF, #0056b3);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
 }
 
 .btn-gradient:hover {
-	background: linear-gradient(135deg, #8f94fb, #4e54c8);
-	transform: scale(1.05);
-	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(90deg, #0056b3, #003c82);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Animation */
-@keyframes slideIn {
-	from {
-		opacity: 0;
-		transform: translateY(-30px);
-	}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .feedback-container {
+        padding: 30px;
+    }
 
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+    .feedback-container h2 {
+        font-size: 1.5rem;
+    }
+
+    .feedback-container p {
+        font-size: 0.9rem;
+    }
 }

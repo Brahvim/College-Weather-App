@@ -2,116 +2,125 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Feedback Form</title>
 
-	<meta charset="UTF-8">
-
-	<meta
-		name="viewport"
-		content="width=device-width, initial-scale=1.0"
-	>
-
-	<title>Feedback Form</title>
-
-	<link
-		rel="stylesheet"
-		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	>
-
-	<link
-		rel="stylesheet"
-		href="feedback.css"
-	>
-
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    >
+    <link
+        rel="stylesheet"
+        href="feedback.css"
+    >
 </head>
 
 <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+        <div class="container-fluid">
+            <a
+                class="navbar-brand"
+                href="index.html"
+            >Weather Application</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarContent"
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+                class="collapse navbar-collapse"
+                id="navbarContent"
+            >
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a
+                            class="nav-link"
+                            href="index.html"
+                        >Home</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link"
+                            href="resources.html"
+                        >Resources</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link"
+                            href="team.html"
+                        >Team</a></li>
+                    <li class="nav-item"><a
+                            class="nav-link"
+                            href="feedback.html"
+                        >Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-	<!-- ...Meh: -->
-	<!-- <img
-		id="img-rainbow"
-		src="feedback.jpg"
-		alt="Give us feedback! :)"
-	> -->
+    <!-- Feedback Form Section -->
+    <div class="container">
+        <div class="feedback-container shadow-lg rounded p-5">
+            <h2 class="text-center mb-4">We'd &lt;3 to hear from you!</h2>
+            <p class="text-center text-muted">
+                We may message you regarding it <i>personally!</i>
+                <br />
+                When you tell us things, we grow! Share your thoughts below!:
+            </p>
 
-	<div class="container my-5">
+            <!-- Feedback Form -->
+            <form method="POST">
+                <div class="form-floating mb-3">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        placeholder="Your Name"
+                    >
+                    <label for="name">Your name :)</label>
+                </div>
 
-		<div class="feedback-container shadow-lg rounded">
+                <div class="form-floating mb-3">
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="name@example.com"
+                    >
+                    <label for="email">Mail (humans may mail you!),</label>
+                </div>
 
-			<h2 class="text-center mb-4">We'd &lt;3 to hear from you!</h2>
-			<p class="text-center text-muted">
-				We may message you regarding it <i>personally!</i>
-				<br />
-				Our server will e-mail you to notify you if we receive it.
-				<br />
-				<b>When you feed us, we grow!</b> Share your thoughts below!:
-			</p>
+                <div class="form-floating mb-3">
+                    <textarea
+                        class="form-control"
+                        id="feedback"
+                        name="feedback"
+                        placeholder="Share your feedback here"
+                        style="height: 150px"
+                        required
+                    ></textarea>
+                    <label for="feedback">Your <i>soda-smooth, spirit-full</i> thoughts!</label>
+                </div>
 
-			<form
-				method="POST"
-				action="/feedback"
-			>
+                <div class="text-center">
+                    <button
+                        type="submit"
+                        class="btn btn-gradient btn-lg w-100"
+                    >Submit Feedback</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-				<div class="form-floating mb-3">
-
-					<input
-						id="name"
-						type="text"
-						name="name"
-						class="form-control"
-						placeholder="Your Name"
-					>
-
-					<label for="name">Your name :)</label>
-
-				</div>
-
-				<div class="form-floating mb-3">
-
-					<input
-						id="email"
-						type="email"
-						name="email"
-						class="form-control"
-						placeholder="name@example.com"
-					>
-
-					<label for="email">Mail (personal messages only!),</label>
-
-				</div>
-
-				<div class="form-floating mb-3">
-
-					<textarea
-						required
-						id="feedback"
-						name="feedback"
-						class="form-control"
-						style="height: 150px"
-						placeholder="Share your feedback here"
-					></textarea>
-
-					<label for="feedback">Your soda-smooth spirit-full thoughts!</label>
-
-				</div>
-
-				<div class="text-center">
-
-					<button
-						type="submit"
-						class="btn btn-gradient btn-lg w-100"
-					>Submit Feedback</button>
-
-				</div>
-
-			</form>
-
-		</div>
-
-	</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-	</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

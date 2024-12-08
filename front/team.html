@@ -1,110 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- This file DOES NOT have our names and images for now. Probably won't anytime soon. Waaaaah! -->
-
 <head>
-
-	<meta charset="utf-8">
-	<title>Meet the Team</title>
-
-	<link
-		rel="stylesheet"
-		href="team.css"
-	>
-
-	<meta
-		name="viewport"
-		content="width=device-width, initial-scale=1.0"
-	>
-
+    <meta charset="utf-8">
+    <title>Meet The Team!</title>
+    <link
+        rel="stylesheet"
+        href="team.css"
+    >
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <!-- Font Awesome for Social Icons -->
+    <script
+        src="https://kit.fontawesome.com/a076d05399.js"
+        crossorigin="anonymous"
+    ></script>
 </head>
 
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <!-- Brand Logo -->
+            <a
+                class="navbar-brand"
+                href="index.html"
+            >Weather Application</a>
+            <!-- Hamburger Menu -->
+            <button
+                class="navbar-toggler"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navigation Links -->
+            <div class="navbar-menu">
+                <ul class="navbar-links">
+                    <li><a
+                            class="nav-link"
+                            href="index.html"
+                        >Home</a></li>
+                    <li><a
+                            class="nav-link"
+                            href="resources.html"
+                        >Resources</a></li>
+                    <li><a
+                            class="nav-link"
+                            href="team.html"
+                            aria-current="page"
+                        >Team</a></li>
+                    <li><a
+                            class="nav-link"
+                            href="feedback.html"
+                        >Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-	<header>
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Meet The Team!</h1>
+        <p>Get to know who we all <i>actually</i> are!</p>
+    </header>
 
-		<h1>Meet Our Team</h1>
-		<p>Get to know us!</p>
+    <!-- Team Section -->
+    <section class="team-container">
+        <div class="team-member">
+            <img
+                src="member1.jpg"
+                alt="Photo of Member 1, Frontend Developer"
+                loading="lazy"
+            >
+            <h2>Frontend Developer</h2>
 
-	</header>
 
-	<section class="team-container">
+        </div>
 
-		<div class="team-member">
+        <div class="team-member">
+            <img
+                src="member2.jpg"
+                alt="Photo of Member 2, Backend Developer"
+                loading="lazy"
+            >
+            <h2>Backend Developer</h2>
 
-			<img
-				src="member1.jpg"
-				alt="Team Member 1"
-			>
 
-			<h2>Member 1</h2>
+        </div>
 
-			<p>Frontend Developer</p>
+        <div class="team-member">
+            <img
+                src="member3.jpg"
+                alt="Photo of Member 3, Manager"
+                loading="lazy"
+            >
+            <h2> Manager</h2>
 
-			<div class="social-links">
-			</div>
 
-		</div>
+        </div>
 
-		<div class="team-member">
+        <div class="team-member">
+            <img
+                src="member4.jpg"
+                alt="Photo of Member 4, Executive Manager"
+                loading="lazy"
+            >
+            <h2>Executive Manager</h2>
 
-			<img
-				src="member2.jpg"
-				alt="Team Member 2"
-			>
+        </div>
+    </section>
 
-			<h2>Member 2</h2>
+    <!-- Footer Section -->
+    <!-- <footer> -->
+    <!-- <p>&copy; 2024 Environmental Monitoring Web Portal. All Rights Reserved.</p> -->
+    <!-- </footer> -->
 
-			<p>Backend Developer</p>
+    <!-- JavaScript for Navbar -->
+    <script>
+        const toggler = document.querySelector('.navbar-toggler');
+        const menu = document.querySelector('.navbar-menu');
 
-			<div class="social-links">
-			</div>
-
-		</div>
-
-		<!-- ✨😅👍️ -->
-
-		<div class="team-member">
-
-			<img
-				src="member3.jpg"
-				alt="Team Member 3"
-			>
-
-			<h2>Member 3</h2>
-
-			<p>Manager</p>
-
-			<div class="social-links">
-			</div>
-
-		</div>
-
-		<div class="team-member">
-
-			<img
-				src="member4.jpg"
-				alt="Team Member 4"
-			>
-
-			<h2>Member 4</h2>
-
-			<p>Executive Manager</p>
-
-			<div class="social-links">
-			</div>
-
-		</div>
-
-	</section>
-
-	<footer>
-
-		<!-- <p>&copy; 2024 Weather App Team. All Rights Reserved.</p> --> <!-- Member 1 did this >:(  -->
-
-	</footer>
-
+        toggler.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+    </script>
 </body>
 
 </html>
