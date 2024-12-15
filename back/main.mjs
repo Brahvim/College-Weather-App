@@ -55,7 +55,6 @@ async function fetchOpenWeatherMap(p_city) {
 s_app.use(express.static(s_pathFront));
 s_app.use(bodyParser.urlencoded({ extended: true }));
 
-//#region Files.
 s_app.get("/", (p_request, p_response) => {
 
 	p_response.sendFile(path.join(s_pathFront, "index.html"));
@@ -98,21 +97,7 @@ s_app.post("/feedback", (p_request, p_response) => {
 
 s_app.get("/weather", (p_request, p_response) => {
 
-	const querySplit = p_request.url.split("?");
-
-	if (querySplit.length === 1) {
-
-		p_response.writeHead(400, "Content-Type", "application/json");
-		p_response.end();
-		return;
-
-	}
-
-	const query = querySplit[1];
-	const paramQPair = query.split("&")[0];
-	const paramQValue = paramQPair.split("=")[1];
-
-	fetchOpenWeatherMap(paramQValue)
+	fetchOpenWeatherMap(p_request.query["q"])
 		.then((p_result) => {
 
 			p_response
@@ -136,4 +121,3 @@ s_app.listen(s_port, () => {
 	console.log(`Server is running at [ http://localhost:${s_port} ].`);
 
 });
-//#endregion
