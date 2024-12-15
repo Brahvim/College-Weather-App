@@ -1,5 +1,5 @@
 async function fetchCity(p_city) {
-	return (await fetch(`/weather?q=${p_city}`)).json();
+	return (await fetch(`/weather?city=${p_city}`)).json();
 }
 
 function displayError() {

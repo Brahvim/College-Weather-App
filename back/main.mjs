@@ -97,7 +97,7 @@ s_app.post("/feedback", (p_request, p_response) => {
 
 s_app.get("/weather", (p_request, p_response) => {
 
-	fetchOpenWeatherMap(p_request.query["q"])
+	fetchOpenWeatherMap(p_request.query["city"])
 		.then((p_result) => {
 
 			p_response
